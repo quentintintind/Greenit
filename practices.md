@@ -56,3 +56,51 @@ Liens "ouvre une nouvelle fenêtre" systématiques : ouvrir de nouveaux onglets 
 
 Résumé des priorités
 PrioritéAction🔴Supprimer la duplication du logo et de la nav dans le DOM🔴Passer les images en WebP + ajouter lazy loading + dimensions🔴Charger le widget de réservation et la carte Maps au clic uniquement🟠Supprimer ou conditionner le chargement des 11 drapeaux🟠Remplacer le PDF menu par une page HTML légère🟠Nettoyer les éléments DOM cachés (menu mobile, formulaire contact)🟡Questionner la pertinence des 11 langues🟡Ajouter le support prefers-color-scheme
+
+
+
+a associer le site web initial avait donbc ces problemes : D'après les résultats de votre audit, votre page pèse 5,45 Mo, soit plus du double de la médiane du web (2,41 Mo). C'est un "poids lourd" qui pénalise votre score RSE (consommation de bande passante) et votre SEO (vitesse de chargement).
+
+Voici un plan d'action technique pour diviser ce poids par trois :
+1. Cure de minceur pour les Images (Le levier n°1)
+
+C'est généralement 80% du poids d'un site d'hôtel.
+
+    Passez au WebP ou AVIF : Remplacez vos formats .jpg ou .png. Le WebP offre une compression jusqu'à 30% supérieure à qualité égale.
+
+    Redimensionnement "Responsive" : Ne chargez pas une image de 4000px de large si elle s'affiche dans un bloc de 400px sur mobile. Utilisez l'attribut srcset en HTML pour servir la bonne taille selon l'écran.
+
+    Compression sans perte : Utilisez des outils comme TinyPNG ou Squoosh avant d'uploader vos visuels.
+
+2. Nettoyage du Code (HTML, CSS, JS)
+
+Le site actuel semble charger beaucoup de bibliothèques externes.
+
+    Minification : Supprimez tous les espaces, commentaires et sauts de ligne inutiles dans vos fichiers .css et .js.
+
+    Suppression du "Dead Code" : Les thèmes d'hôtels pré-construits chargent souvent des fonctions (calendriers, galeries, polices) que vous n'utilisez pas. Désactivez ce qui est superflu.
+
+    Chargement différé (Lazy Loading) : Paramétrez votre site pour que les images en bas de page ne se chargent que lorsque l'utilisateur descend (scroll).
+
+3. Remplacer le visuel par du structurel
+
+    Pictos en SVG ou Icon Fonts : Au lieu d'utiliser des images .png pour vos icônes (Wifi, Petit-déjeuner, Parking), utilisez du format SVG. C'est du code pur, ultra-léger et vectoriel (toujours net).
+
+    Effets CSS : Utilisez le code CSS pour vos dégradés, arrondis de boutons ou ombres portées au lieu de charger des images décoratives.
+
+4. Optimisation de la Mise en cache
+
+C'est le critère cité dans votre audit ("Facilitez la mise en cache").
+
+    Principe : Indiquez au navigateur du visiteur de conserver les éléments du site (logo, menu, CSS) en mémoire locale.
+
+    Bénéfice : Lors de la deuxième visite, le navigateur ne retélécharge rien. La page s'affiche instantanément.
+
+Comparatif : Avant vs Après Optimisation
+Élément	État Actuel (Estimation)	Cible Optimisée
+Images	4.5 Mo (HD non compressé)	0.8 Mo (WebP progressif)
+Scripts JS	0.6 Mo (Scripts tiers inutiles)	0.2 Mo (Minifiés)
+Polices (Fonts)	300 Ko (Toutes les graisses)	50 Ko (Woff2 uniquement)
+Poids Total	~5.5 Mo	< 1.5 Mo
+
+Souhaitez-vous que je regarde une page spécifique du site (comme la galerie photos) pour vous dire exactement quelles images bloquent le score ?
