@@ -1,57 +1,75 @@
 🔴 Problèmes critiques
 Contenu & fonctionnalités
 
-Logo chargé deux fois dans le DOM : une instance desktop + une instance mobile dans le même HTML. Ressource dupliquée inutilement.
-Navigation entièrement dupliquée dans le HTML (menu desktop + menu mobile). Le DOM contient deux fois tous les éléments de nav → surcharge HTML, rendu, et mémoire.
-11 images de drapeaux (PNG) chargées pour les langues, même si l'utilisateur n'en a besoin que d'une. Aucune logique de chargement conditionnel.
+| Problème | Pratique RWEB |
+|----------|--------------|
+| Logo chargé deux fois dans le DOM : une instance desktop + une instance mobile dans le même HTML. Ressource dupliquée inutilement. | [RWEB_0001 - Éliminer les fonctionnalités non essentielles](fr/RWEB_0001-eliminer-les-fonctionnalites-non-essentielles.mdx) |
+| Navigation entièrement dupliquée dans le HTML (menu desktop + menu mobile). Le DOM contient deux fois tous les éléments de nav → surcharge HTML, rendu, et mémoire. | [RWEB_0001 - Éliminer les fonctionnalités non essentielles](fr/RWEB_0001-eliminer-les-fonctionnalites-non-essentielles.mdx) |
+| 11 images de drapeaux (PNG) chargées pour les langues, même si l'utilisateur n'en a besoin que d'une. Aucune logique de chargement conditionnel. | [RWEB_0003 - Supprimer les fonctionnalités non utilisées](fr/RWEB_0003-eliminer-les-fonctionnalites-non-utilisees.mdx) |
 
 Images
 
-Aucun format moderne (WebP ou AVIF) — les images sont servies en .png depuis le CDN Zenchef.
-Pas de dimensions width/height spécifiées sur les balises <img> → provoque des Layout Shifts (CLS) et empêche le navigateur de réserver l'espace avant le chargement.
-Pas d'attribut loading="lazy" sur les images non critiques (logo, image de plat en bas de page).
+| Problème | Pratique RWEB |
+|----------|--------------|
+| Aucun format moderne (WebP ou AVIF) — les images sont servies en .png depuis le CDN Zenchef. | Optimisation image (pas de RWEB spécifique, mais levier majeur) |
+| Pas de dimensions width/height spécifiées sur les balises <img> → provoque des Layout Shifts (CLS) et empêche le navigateur de réserver l'espace avant le chargement. | [RWEB_0012 - Favoriser un design simple, épuré et adapté au Web](fr/RWEB_0012-favoriser-un-design-simple-epure-adapte-au-web.mdx) |
+| Pas d'attribut loading="lazy" sur les images non critiques (logo, image de plat en bas de page). | [RWEB_0007 - Proposer un traitement asynchrone lorsque c'est possible](fr/RWEB_0007-proposer-un-traitement-asynchrone-lorsque-c-est-possible.mdx) |
 
 Ressources tierces
 
-Widget de réservation Zenchef : script tiers chargé systématiquement sur toutes les pages, même si l'utilisateur ne réserve pas.
-Google Maps probablement en iframe sur la page contact : chargement immédiat d'une ressource très lourde (JS, tuiles, APIs) sans déclenchement au clic.
-Appel externe newsletter (nl.zenchef.com) générant une requête HTTP supplémentaire dès le chargement de page.
+| Problème | Pratique RWEB |
+|----------|--------------|
+| Widget de réservation Zenchef : script tiers chargé systématiquement sur toutes les pages, même si l'utilisateur ne réserve pas. | [RWEB_0007 - Proposer un traitement asynchrone lorsque c'est possible](fr/RWEB_0007-proposer-un-traitement-asynchrone-lorsque-c-est-possible.mdx) |
+| Google Maps probablement en iframe sur la page contact : chargement immédiat d'une ressource très lourde (JS, tuiles, APIs) sans déclenchement au clic. | [RWEB_0007 - Proposer un traitement asynchrone lorsque c'est possible](fr/RWEB_0007-proposer-un-traitement-asynchrone-lorsque-c-est-possible.mdx) |
+| Appel externe newsletter (nl.zenchef.com) générant une requête HTTP supplémentaire dès le chargement de page. | [RWEB_0021 - Limiter le nombre d'appels aux API HTTP](fr/RWEB_0021-limiter-le-nombre-d-appels-aux-api-http.mdx) |
 
 
 🟠 Problèmes significatifs
 HTML / DOM
 
-Contenu texte redondant : "Bienvenue chez Le Splendid", puis "Le Splendid", puis "Le Splendid Brasserie LYON" apparaissent plusieurs fois dans la page pour des raisons de mise en page — à factoriser.
-Hiérarchie des titres incohérente (h1 → h2 → h4 en sautant h3) → mauvaise sémantique, peut forcer des comportements de rendu inutiles.
-Éléments cachés en CSS (menu mobile) présents dans le DOM mais invisibles : noeuds inutilement parsés et mis en mémoire.
+| Problème | Pratique RWEB |
+|----------|--------------|
+| Contenu texte redondant : "Bienvenue chez Le Splendid", puis "Le Splendid", puis "Le Splendid Brasserie LYON" apparaissent plusieurs fois dans la page pour des raisons de mise en page — à factoriser. | [RWEB_0001 - Éliminer les fonctionnalités non essentielles](fr/RWEB_0001-eliminer-les-fonctionnalites-non-essentielles.mdx) |
+| Hiérarchie des titres incohérente (h1 → h2 → h4 en sautant h3) → mauvaise sémantique, peut forcer des comportements de rendu inutiles. | [RWEB_0012 - Favoriser un design simple, épuré et adapté au Web](fr/RWEB_0012-favoriser-un-design-simple-epure-adapte-au-web.mdx) |
+| Éléments cachés en CSS (menu mobile) présents dans le DOM mais invisibles : noeuds inutilement parsés et mis en mémoire. | [RWEB_0001 - Éliminer les fonctionnalités non essentielles](fr/RWEB_0001-eliminer-les-fonctionnalites-non-essentielles.mdx) |
 
 Fichiers & formats
 
-Carte & Menus en PDF : proposer un PDF directement lié depuis le menu de navigation pousse les utilisateurs à télécharger un fichier lourd. Une page HTML légère serait plus sobre.
-Pas de politique de cache visible côté HTML (pas d'indication d'en-têtes Cache-Control côté meta, dépend entièrement du CDN Zenchef).
+| Problème | Pratique RWEB |
+|----------|--------------|
+| Carte & Menus en PDF : proposer un PDF directement lié depuis le menu de navigation pousse les utilisateurs à télécharger un fichier lourd. Une page HTML légère serait plus sobre. | [RWEB_0018 - Favoriser les pages statiques](fr/RWEB_0018-favoriser-les-pages-statiques.mdx) |
+| Pas de politique de cache visible côté HTML (pas d'indication d'en-têtes Cache-Control côté meta, dépend entièrement du CDN Zenchef). | Optimisation serveur (cache) - non couvert par RWEB |
 
 Scripts
 
-Dépendance totale à Zenchef pour le rendu : si leur CDN est lent ou indisponible, la page est dégradée. Aucune version de secours légère.
-Potentiels scripts de tracking tiers injectés via la plateforme Zenchef (analytics, pixels) non maîtrisés par le propriétaire du site.
+| Problème | Pratique RWEB |
+|----------|--------------|
+| Dépendance totale à Zenchef pour le rendu : si leur CDN est lent ou indisponible, la page est dégradée. Aucune version de secours légère. | [RWEB_0001 - Éliminer les fonctionnalités non essentielles](fr/RWEB_0001-eliminer-les-fonctionnalites-non-essentielles.mdx) + [RWEB_0012 - Favoriser un design simple, épuré et adapté au Web](fr/RWEB_0012-favoriser-un-design-simple-epure-adapte-au-web.mdx) |
+| Potentiels scripts de tracking tiers injectés via la plateforme Zenchef (analytics, pixels) non maîtrisés par le propriétaire du site. | [RWEB_0001 - Éliminer les fonctionnalités non essentielles](fr/RWEB_0001-eliminer-les-fonctionnalites-non-essentielles.mdx) + [RWEB_0003 - Supprimer les fonctionnalités non utilisées](fr/RWEB_0003-eliminer-les-fonctionnalites-non-utilisees.mdx) |
 
 
 🟡 Améliorations recommandées
 UX & sobriété fonctionnelle
 
-11 langues proposées pour un restaurant local lyonnais : est-ce vraiment utile ? Charger 11 versions et 11 drapeaux pour un usage probablement très marginal est un gaspillage de ressources.
-Formulaire de contact chargé dans la page (DOM présent mais caché) même si la grande majorité des visiteurs ne l'utilise pas → à charger à la demande.
+| Problème | Pratique RWEB |
+|----------|--------------|
+| 11 langues proposées pour un restaurant local lyonnais : est-ce vraiment utile ? Charger 11 versions et 11 drapeaux pour un usage probablement très marginal est un gaspillage de ressources. | [RWEB_0003 - Supprimer les fonctionnalités non utilisées](fr/RWEB_0003-eliminer-les-fonctionnalites-non-utilisees.mdx) + [RWEB_0002 - Quantifier précisément le besoin](fr/RWEB_0002-quantifier-precisement-le-besoin.mdx) |
+| Formulaire de contact chargé dans la page (DOM présent mais caché) même si la grande majorité des visiteurs ne l'utilise pas → à charger à la demande. | [RWEB_0007 - Proposer un traitement asynchrone lorsque c'est possible](fr/RWEB_0007-proposer-un-traitement-asynchrone-lorsque-c-est-possible.mdx) |
 
 Texte & données
 
-Répétition des horaires : les horaires apparaissent dans la page principale et probablement aussi sur la page contact/accès → duplication de données à centraliser.
-Absence de meta description (non visible dans le source récupéré) → peut forcer les moteurs à générer des extraits plus lourds.
+| Problème | Pratique RWEB |
+|----------|--------------|
+| Répétition des horaires : les horaires apparaissent dans la page principale et probablement aussi sur la page contact/accès → duplication de données à centraliser. | [RWEB_0001 - Éliminer les fonctionnalités non essentielles](fr/RWEB_0001-eliminer-les-fonctionnalites-non-essentielles.mdx) |
+| Absence de meta description (non visible dans le source récupéré) → peut forcer les moteurs à générer des extraits plus lourds. | [RWEB_0011 - Avoir un titre de page et une metadescription pertinents avec le contenu de la page](fr/RWEB_0011-avoir-un-titre-de-page-et-une-metadescription-pertinents-avec-le-contenu-de-la-page.mdx) |
 
 Accessibilité / sobriété
 
-Pas d'adaptation au mode sombre (prefers-color-scheme) → sur mobile, un fond blanc consomme plus d'énergie sur les écrans OLED que des tons sombres.
-Pas d'attribut alt optimisé sur le logo (alt = "Logo Le Splendid" répété deux fois, ce qui confirme le doublon).
-Liens "ouvre une nouvelle fenêtre" systématiques : ouvrir de nouveaux onglets multiplie les instances de rendu navigateur sans nécessité réelle.
+| Problème | Pratique RWEB |
+|----------|--------------|
+| Pas d'adaptation au mode sombre (prefers-color-scheme) → sur mobile, un fond blanc consomme plus d'énergie sur les écrans OLED que des tons sombres. | [RWEB_0012 - Favoriser un design simple, épuré et adapté au Web](fr/RWEB_0012-favoriser-un-design-simple-epure-adapte-au-web.mdx) |
+| Pas d'attribut alt optimisé sur le logo (alt = "Logo Le Splendid" répété deux fois, ce qui confirme le doublon). | [RWEB_0012 - Favoriser un design simple, épuré et adapté au Web](fr/RWEB_0012-favoriser-un-design-simple-epure-adapte-au-web.mdx) |
+| Liens "ouvre une nouvelle fenêtre" systématiques : ouvrir de nouveaux onglets multiplie les instances de rendu navigateur sans nécessité réelle. | [RWEB_0005 - Optimiser le parcours utilisateur](fr/RWEB_0005-optimiser-le-parcours-utilisateur.mdx) |
 
 
 Résumé des priorités
