@@ -1,4 +1,4 @@
-🔴 Problèmes critiques test
+🔴 Problèmes critiques
 Contenu & fonctionnalités
 
 | Problème | Pratique RWEB |
